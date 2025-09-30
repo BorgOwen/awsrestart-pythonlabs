@@ -1,0 +1,42 @@
+#!/bin/bash
+
+
+
+# Define a variable to hold the raw sequence data
+
+raw_sequence=$(cat <<'EOF'
+
+ORIGIN              1 malwmrllpl lallalwgpd paaafvnqhl cgshlvealy lvcgergffy tpktrreaed
+       61 lqvgqvelgg gpgagslqpl alegslqkrg iveqcctsic slyqlenycn
+//
+EOF
+)
+
+# Clean the raw sequence by removing all spaces, digits, and the header/footer lines.
+# This gives us a single, 110-character string.
+cleaned_sequence=$(echo "$raw_sequence" | grep -v 'ORIGIN' | grep -v '//' | tr -d ' ' | tr -d '[:digit:]')
+
+echo "Cleaned 110-character sequence:"
+echo "$cleaned_sequence"
+echo "--------------------------------------------------"
+
+# Use 'cut' to extract each segment based on the character position.
+# 'cut' uses 1-based indexing, which matches the amino acid numbering.
+
+# Amino acids 1-24 (Signal Sequence)
+echo "Amino acids 1-24 (Signal Sequence):"
+echo "$cleaned_sequence" | cut -c 1-24
+
+# Amino acids 25-54 (B-chain of Proinsulin)
+
+echo "Amino acids 25-54 (B-chain of Proinsulin):"
+echo "$cleaned_sequence" | cut -c 25-54
+
+
+# Amino acids 55-89 (C-peptide of Proinsulin)
+echo "Amino acids 55-89 (C-peptide of Proinsulin):"
+echo "$cleaned_sequence" | cut -c 55-89
+
+# Amino acids 90-110 (A-chain of Proinsulin)
+echo "Amino acids 90-110 (A-chain of Proinsulin):"
+echo "$cleaned_sequence" | cut -c 90-110

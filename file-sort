@@ -1,0 +1,8 @@
+file="preproinsulin-seq.txt"
+count=$(grep -o '[a-z]' "$file" | wc -l)
+
+if [ "$count" -eq 110 ]; then
+  echo "The file '$file' contains exactly 110 lowercase letters."
+else
+  echo "The file '$file' does not contain exactly 110 lowercase letters. It contains $count."
+fi
